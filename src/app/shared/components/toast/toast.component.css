@@ -1,0 +1,27 @@
+.toast-container {
+  z-index: 9999;
+}
+
+.alert {
+  min-width: 350px;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.alert strong {
+  font-weight: 600;
+}
+
+.alert .bi {
+  flex-shrink: 0;
+}

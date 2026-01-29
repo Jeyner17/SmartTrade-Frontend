@@ -1,0 +1,97 @@
+<div class="layout-wrapper">
+  
+  <!-- SIDEBAR -->
+  <aside class="sidebar" [class.collapsed]="isSidebarCollapsed">
+    
+    <!-- LOGO -->
+    <div class="sidebar-header">
+      <div class="logo">
+        <div class="logo-icon">
+          <i class="bi bi-shop"></i>
+        </div>
+        <span class="logo-text" *ngIf="!isSidebarCollapsed">{{ appName }}</span>
+      </div>
+    </div>
+
+    <!-- MENÚ -->
+    <nav class="sidebar-menu">
+      <ul class="menu-list">
+        <li *ngFor="let item of menuItems" class="menu-item">
+          <a 
+            [routerLink]="item.route" 
+            routerLinkActive="active"
+            class="menu-link"
+            [title]="item.label">
+            <i [class]="'bi ' + item.icon + ' menu-icon'"></i>
+            <span class="menu-label" *ngIf="!isSidebarCollapsed">{{ item.label }}</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- MODO OSCURO (futuro) -->
+    <div class="sidebar-footer" *ngIf="!isSidebarCollapsed">
+      <button class="mode-toggle" type="button">
+        <i class="bi bi-moon"></i>
+        <span>Modo Oscuro</span>
+      </button>
+    </div>
+
+    <!-- USUARIO -->
+    <div class="sidebar-user">
+      <div class="user-avatar">
+        <span>{{ currentUser.initials }}</span>
+      </div>
+      <div class="user-info" *ngIf="!isSidebarCollapsed">
+        <div class="user-name">{{ currentUser.name }}</div>
+        <div class="user-role">{{ currentUser.role }}</div>
+      </div>
+    </div>
+
+    <!-- BOTÓN LOGOUT -->
+    <div class="sidebar-logout" *ngIf="!isSidebarCollapsed">
+      <button class="btn-logout" type="button">
+        <i class="bi bi-box-arrow-right"></i>
+        <span>Salir</span>
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-wrapper" [class.sidebar-collapsed]="isSidebarCollapsed">
+    
+    <!-- HEADER -->
+    <header class="main-header">
+      <button class="btn-toggle-sidebar" (click)="toggleSidebar()">
+        <i class="bi bi-list"></i>
+      </button>
+      
+      <div class="header-title">
+        <h1 class="mb-0">Sistema de Gestión Comercial</h1>
+      </div>
+
+      <div class="header-actions">
+        <!-- Notificaciones, usuario, etc. -->
+        <button class="btn btn-icon">
+          <i class="bi bi-bell"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="main-content">
+      <router-outlet></router-outlet>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="main-footer">
+      <div class="footer-content">
+        <span class="text-muted">© {{ currentYear }} {{ appName }}</span>
+        <span class="text-muted">Versión 1.0.0</span>
+      </div>
+    </footer>
+
+  </div>
+
+</div>
