@@ -1,0 +1,161 @@
+<div class="categories-container">
+  <!-- Header -->
+  <div class="categories-header">
+    <div class="header-left">
+      <h2><i class="bi bi-diagram-3"></i> Gestión de Categorías</h2>
+    </div>
+    <div class="header-right">
+      <button class="btn btn-primary" (click)="openCreateModal()">
+        <i class="bi bi-plus-circle"></i> Nueva Categoría
+      </button>
+    </div>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filters">
+    <div class="filter-group">
+      <label>Estado:</label>
+      <div class="btn-group" role="group">
+        <button
+          type="button"
+          class="btn btn-sm"
+          [class.btn-primary]="filterStatus === 'active'"
+          [class.btn-outline-primary]="filterStatus !== 'active'"
+          (click)="onFilterChange('active')">
+          Activas
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm"
+          [class.btn-secondary]="filterStatus === 'inactive'"
+          [class.btn-outline-secondary]="filterStatus !== 'inactive'"
+          (click)="onFilterChange('inactive')">
+          Inactivas
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm"
+          [class.btn-info]="filterStatus === 'all'"
+          [class.btn-outline-info]="filterStatus !== 'all'"
+          (click)="onFilterChange('all')">
+          Todas
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+    <p>Cargando categorías...</p>
+  </div>
+
+  <!-- Árbol de Categorías -->
+  <div *ngIf="!loading" class="categories-tree">
+    <div *ngIf="categories.length === 0" class="empty-state">
+      <i class="bi bi-folder-x"></i>
+      <p>No hay categorías para mostrar</p>
+      <button class="btn btn-primary" (click)="openCreateModal()">
+        Crear Primera Categoría
+      </button>
+    </div>
+
+    <div *ngIf="categories.length > 0" class="tree-list">
+      <ng-container *ngFor="let category of categories">
+        <ng-container *ngTemplateOutlet="categoryNode; context: { $implicit: category }"></ng-container>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<!-- Template Recursivo para Nodos del Árbol -->
+<ng-template #categoryNode let-category>
+  <div class="category-node" [ngClass]="getLevelClass(category.level)">
+    <div class="category-row" [class.inactive]="!category.isActive">
+      <!-- Expand/Collapse Button -->
+      <button
+        type="button"
+        *ngIf="category.children && category.children.length > 0"
+        class="btn-expand"
+        (click)="toggleExpand(category.id)">
+        <i class="bi" [ngClass]="isExpanded(category.id) ? 'bi-chevron-down' : 'bi-chevron-right'"></i>
+      </button>
+      <span *ngIf="!category.children || category.children.length === 0" class="no-expand"></span>
+
+      <!-- Icono de Carpeta -->
+      <i class="bi category-icon"
+         [ngClass]="category.children && category.children.length > 0 ? 'bi-folder-fill' : 'bi-tag-fill'">
+      </i>
+
+      <!-- Información de la Categoría -->
+      <div class="category-info">
+        <span class="category-name">{{ category.name }}</span>
+        <span class="category-count">({{ category.productCount || 0 }} productos)</span>
+        <span class="badge" [ngClass]="getStatusClass(category.isActive)">
+          {{ category.isActive ? 'Activa' : 'Inactiva' }}
+        </span>
+      </div>
+
+      <!-- Acciones -->
+      <div class="category-actions">
+        <button
+          type="button"
+          class="btn btn-sm btn-success"
+          (click)="openCreateModal(category); $event.stopPropagation()"
+          title="Agregar subcategoría">
+          <i class="bi bi-plus"></i>
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-info"
+          (click)="viewProducts(category, $event)"
+          title="Ver productos">
+          <i class="bi bi-box-seam"></i>
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-primary"
+          (click)="openEditModal(category); $event.stopPropagation()"
+          title="Editar">
+          <i class="bi bi-pencil"></i>
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm"
+          [class.btn-warning]="category.isActive"
+          [class.btn-secondary]="!category.isActive"
+          (click)="toggleStatus(category, $event)"
+          [title]="category.isActive ? 'Desactivar' : 'Activar'">
+          <i class="bi" [ngClass]="category.isActive ? 'bi-toggle-on' : 'bi-toggle-off'"></i>
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-danger"
+          (click)="deleteCategory(category, $event)"
+          title="Eliminar">
+          <i class="bi bi-trash"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Subcategorías (Recursivo) -->
+    <div *ngIf="category.children && category.children.length > 0 && isExpanded(category.id)"
+         class="category-children">
+      <ng-container *ngFor="let child of category.children">
+        <ng-container *ngTemplateOutlet="categoryNode; context: { $implicit: child }"></ng-container>
+      </ng-container>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Modal de Categoría -->
+<app-category-modal
+  *ngIf="showModal"
+  [mode]="modalMode"
+  [category]="selectedCategory"
+  [allCategories]="categories"
+  (save)="onModalSave()"
+  (cancel)="closeModal()">
+</app-category-modal>

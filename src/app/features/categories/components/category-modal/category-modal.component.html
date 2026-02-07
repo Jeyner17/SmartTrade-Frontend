@@ -1,0 +1,137 @@
+<div class="modal-backdrop" (click)="onCancel()"></div>
+
+<div class="modal-container">
+  <div class="modal-header">
+    <h3>{{ getTitle() }}</h3>
+    <button class="btn-close" (click)="onCancel()" type="button">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+
+  <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+    <div class="modal-body">
+      <!-- Nombre -->
+      <div class="form-group">
+        <label for="name" class="form-label required">
+          Nombre de la Categoría
+        </label>
+        <input
+          type="text"
+          id="name"
+          class="form-control"
+          formControlName="name"
+          placeholder="Ej: Bebidas, Electrónicos, etc."
+          [class.is-invalid]="hasError('name', 'required') || hasError('name', 'minlength') || hasError('name', 'maxlength')"
+        />
+        <div class="invalid-feedback" *ngIf="hasError('name', 'required')">
+          El nombre es requerido
+        </div>
+        <div class="invalid-feedback" *ngIf="hasError('name', 'minlength')">
+          El nombre debe tener al menos 2 caracteres
+        </div>
+        <div class="invalid-feedback" *ngIf="hasError('name', 'maxlength')">
+          El nombre no puede exceder 100 caracteres
+        </div>
+      </div>
+
+      <!-- Descripción -->
+      <div class="form-group">
+        <label for="description" class="form-label">
+          Descripción (opcional)
+        </label>
+        <textarea
+          id="description"
+          class="form-control"
+          formControlName="description"
+          rows="3"
+          placeholder="Descripción de la categoría..."
+          [class.is-invalid]="hasError('description', 'maxlength')"
+        ></textarea>
+        <div class="invalid-feedback" *ngIf="hasError('description', 'maxlength')">
+          La descripción no puede exceder 500 caracteres
+        </div>
+        <small class="form-text text-muted">
+          {{ categoryForm.get('description')?.value?.length || 0 }} / 500 caracteres
+        </small>
+      </div>
+
+      <!-- Categoría Padre -->
+      <div class="form-group">
+        <label for="parentId" class="form-label">
+          Categoría Padre
+        </label>
+        <select
+          id="parentId"
+          class="form-select"
+          formControlName="parentId"
+        >
+          <option [ngValue]="null">--- Categoría Principal (Sin Padre) ---</option>
+          <option
+            *ngFor="let parent of availableParents"
+            [ngValue]="parent.id"
+            [disabled]="!parent.isActive"
+          >
+            {{ getIndentation(parent.level) }}{{ parent.name }}
+            <span *ngIf="!parent.isActive">(Inactiva)</span>
+          </option>
+        </select>
+        <small class="form-text text-muted">
+          Si no selecciona ninguna, será una categoría principal
+        </small>
+      </div>
+
+      <!-- Estado -->
+      <div class="form-group">
+        <label class="form-label required">Estado</label>
+        <div class="form-check-group">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="isActive"
+              id="statusActive"
+              [value]="true"
+              formControlName="isActive"
+            />
+            <label class="form-check-label" for="statusActive">
+              <i class="bi bi-check-circle text-success"></i> Activa
+            </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="isActive"
+              id="statusInactive"
+              [value]="false"
+              formControlName="isActive"
+            />
+            <label class="form-check-label" for="statusInactive">
+              <i class="bi bi-x-circle text-secondary"></i> Inactiva
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="onCancel()"
+        [disabled]="loading"
+      >
+        <i class="bi bi-x-circle"></i> Cancelar
+      </button>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="loading || categoryForm.invalid"
+      >
+        <span *ngIf="loading" class="spinner-border spinner-border-sm"></span>
+        <i *ngIf="!loading" class="bi bi-check-circle"></i>
+        {{ mode === 'create' ? 'Crear' : 'Actualizar' }}
+      </button>
+    </div>
+  </form>
+</div>
