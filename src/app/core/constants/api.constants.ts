@@ -13,6 +13,13 @@ export const API_CONSTANTS = {
       BACKUP: '/settings/backup/configure',
       TECHNICAL: '/settings/technical/parameters',
       HEALTH: '/settings/health'
+    },
+    CATEGORIES: {
+      BASE: '/categories',
+      BY_ID: (id: number) => `/categories/${id}`,
+      PRODUCTS: (id: number) => `/categories/${id}/products`,
+      STATUS: (id: number) => `/categories/${id}/status`,
+      HEALTH: '/categories/health'
     }
   },
   TIMEOUT: 30000

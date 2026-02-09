@@ -1,0 +1,296 @@
+.products-container {
+  padding: 20px;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+/* Header */
+.products-header {
+  margin-bottom: 20px;
+}
+
+.products-header .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Breadcrumb */
+.breadcrumb-nav {
+  background: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.breadcrumb {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: '›';
+  padding: 0 10px;
+  color: #6c757d;
+}
+
+.breadcrumb-item a {
+  color: #667eea;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.breadcrumb-item a:hover {
+  color: #764ba2;
+  text-decoration: underline;
+}
+
+.breadcrumb-item.active {
+  color: #6c757d;
+}
+
+/* Loading */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.loading p {
+  margin-top: 15px;
+  color: #666;
+}
+
+/* Content */
+.products-content {
+  background: white;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Category Info */
+.category-info {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.category-info h2 {
+  color: #333;
+  font-size: 28px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.category-info h2 i {
+  color: #667eea;
+}
+
+.product-count {
+  color: #666;
+  font-size: 16px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.product-count i {
+  color: #667eea;
+  font-size: 18px;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-state i {
+  font-size: 64px;
+  color: #ccc;
+  margin-bottom: 20px;
+}
+
+.empty-state h3 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.empty-state p {
+  color: #666;
+  margin-bottom: 30px;
+}
+
+/* Table */
+.products-table-container {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.table thead {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.table thead th {
+  border: none;
+  padding: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+
+.table tbody tr {
+  transition: background-color 0.2s;
+}
+
+.table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.table tbody td {
+  padding: 15px;
+  vertical-align: middle;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.table code {
+  background-color: #f8f9fa;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #667eea;
+  font-weight: 500;
+}
+
+.table .price {
+  font-weight: 600;
+  color: #28a745;
+  font-size: 16px;
+}
+
+.table .badge {
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.table .btn {
+  margin: 0 3px;
+  padding: 6px 12px;
+  font-size: 14px;
+}
+
+/* Text Utilities */
+.text-end {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .products-container {
+    padding: 15px;
+  }
+
+  .products-content {
+    padding: 20px;
+  }
+
+  .category-info h2 {
+    font-size: 22px;
+  }
+
+  .products-table-container {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .table {
+    font-size: 14px;
+  }
+
+  .table thead th,
+  .table tbody td {
+    padding: 10px;
+  }
+
+  .table .btn {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+
+  /* Stack actions on mobile */
+  .table tbody td:last-child {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  /* Convertir tabla en cards en móviles muy pequeños */
+  .table thead {
+    display: none;
+  }
+
+  .table,
+  .table tbody,
+  .table tr,
+  .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .table tr {
+    margin-bottom: 15px;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 15px;
+    background: white;
+  }
+
+  .table td {
+    text-align: left !important;
+    padding: 8px 0;
+    border: none;
+  }
+
+  .table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    display: inline-block;
+    width: 100px;
+  }
+
+  .table tbody td:last-child {
+    justify-content: flex-start;
+    margin-top: 10px;
+  }
+}

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 export interface ConfirmationConfig {
   title: string;
@@ -13,17 +13,13 @@ export interface ConfirmationConfig {
   providedIn: 'root'
 })
 export class ConfirmationService {
-  private confirmationSubject = new Subject<boolean>();
 
-  confirm(config: ConfirmationConfig): Observable<boolean> {
+  confirm(message: string, title?: string): Observable<boolean> {
     // Por ahora usar confirm nativo
     // Después podemos mejorarlo con un modal Bootstrap
-    const result = window.confirm(`${config.title}\n\n${config.message}`);
-    
-    const subject = new Subject<boolean>();
-    subject.next(result);
-    subject.complete();
-    
-    return subject.asObservable();
+    const confirmMessage = title ? `${title}\n\n${message}` : message;
+    const result = window.confirm(confirmMessage);
+
+    return of(result);
   }
 }

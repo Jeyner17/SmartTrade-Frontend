@@ -1,0 +1,119 @@
+<div class="products-container">
+  <!-- Header -->
+  <div class="products-header">
+    <button class="btn btn-secondary" (click)="goBack()">
+      <i class="bi bi-arrow-left"></i> Volver a Categorías
+    </button>
+  </div>
+
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="breadcrumb-nav" *ngIf="breadcrumb.length > 0">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a [routerLink]="['/categories']">
+          <i class="bi bi-house-door"></i> Categorías
+        </a>
+      </li>
+      <li
+        *ngFor="let item of breadcrumb; let last = last"
+        class="breadcrumb-item"
+        [class.active]="last"
+      >
+        <a
+          *ngIf="!last"
+          [routerLink]="['/categories', item.id, 'products']"
+          style="cursor: pointer;"
+        >
+          {{ item.name }}
+        </a>
+        <span *ngIf="last">{{ item.name }}</span>
+      </li>
+    </ol>
+  </nav>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+    <p>Cargando productos...</p>
+  </div>
+
+  <!-- Contenido -->
+  <div *ngIf="!loading" class="products-content">
+    <!-- Info -->
+    <div class="category-info">
+      <h2>
+        <i class="bi bi-tag-fill"></i> {{ categoryName }}
+      </h2>
+      <p class="product-count">
+        <i class="bi bi-box-seam"></i>
+        <strong>{{ totalProducts }}</strong> producto{{ totalProducts !== 1 ? 's' : '' }} en esta categoría
+      </p>
+    </div>
+
+    <!-- Sin Productos -->
+    <div *ngIf="products.length === 0" class="empty-state">
+      <i class="bi bi-inbox"></i>
+      <h3>No hay productos en esta categoría</h3>
+      <p>Esta categoría aún no tiene productos asociados.</p>
+      <button class="btn btn-primary" [routerLink]="['/products/new']">
+        <i class="bi bi-plus-circle"></i> Agregar Producto
+      </button>
+    </div>
+
+    <!-- Tabla de Productos -->
+    <div *ngIf="products.length > 0" class="products-table-container">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Nombre del Producto</th>
+            <th class="text-end">Precio</th>
+            <th class="text-center">Stock</th>
+            <th class="text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of products">
+            <td>
+              <code>{{ product.code }}</code>
+            </td>
+            <td>
+              <strong>{{ product.name }}</strong>
+            </td>
+            <td class="text-end">
+              <span class="price">{{ formatPrice(product.price) }}</span>
+            </td>
+            <td class="text-center">
+              <span
+                class="badge"
+                [class.bg-success]="product.stock > 10"
+                [class.bg-warning]="product.stock > 0 && product.stock <= 10"
+                [class.bg-danger]="product.stock === 0"
+              >
+                {{ product.stock }}
+              </span>
+            </td>
+            <td class="text-center">
+              <button
+                class="btn btn-sm btn-primary"
+                [routerLink]="['/products', product.id]"
+                title="Ver detalles"
+              >
+                <i class="bi bi-eye"></i>
+              </button>
+              <button
+                class="btn btn-sm btn-secondary"
+                [routerLink]="['/products', product.id, 'edit']"
+                title="Editar"
+              >
+                <i class="bi bi-pencil"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

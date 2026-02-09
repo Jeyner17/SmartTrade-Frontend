@@ -1,0 +1,262 @@
+.categories-container {
+  padding: 20px;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+/* Header */
+.categories-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.categories-header h2 {
+  margin: 0;
+  color: #333;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Filtros */
+.filters {
+  padding: 15px;
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-group label {
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Loading */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.loading p {
+  margin-top: 15px;
+  color: #666;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.empty-state i {
+  font-size: 64px;
+  color: #ccc;
+  margin-bottom: 20px;
+}
+
+.empty-state p {
+  color: #666;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+/* Árbol de Categorías */
+.categories-tree {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tree-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* Nodo de Categoría */
+.category-node {
+  margin-left: 0;
+}
+
+.category-node.level-1 {
+  margin-left: 30px;
+}
+
+.category-node.level-2 {
+  margin-left: 60px;
+}
+
+.category-node.level-3 {
+  margin-left: 90px;
+}
+
+.category-node.level-4 {
+  margin-left: 120px;
+}
+
+.category-row {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 6px;
+  transition: all 0.2s;
+  border: 1px solid #e9ecef;
+  background: white;
+  margin-bottom: 5px;
+}
+
+.category-row:hover {
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.category-row.inactive {
+  opacity: 0.6;
+  background-color: #f8f9fa;
+}
+
+/* Botón Expandir/Colapsar */
+.btn-expand {
+  background: none;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  color: #666;
+  font-size: 16px;
+  transition: color 0.2s;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-expand:hover {
+  color: #333;
+}
+
+.no-expand {
+  width: 24px;
+  display: inline-block;
+}
+
+/* Icono de Categoría */
+.category-icon {
+  font-size: 20px;
+  margin: 0 10px;
+  color: #ffc107;
+}
+
+/* Información de la Categoría */
+.category-info {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.category-name {
+  font-weight: 500;
+  color: #333;
+  font-size: 16px;
+}
+
+.category-count {
+  color: #666;
+  font-size: 14px;
+}
+
+/* Badges de Estado */
+.badge {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.badge.status-active {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.badge.status-inactive {
+  background-color: #e2e3e5;
+  color: #6c757d;
+}
+
+/* Acciones */
+.category-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.category-actions .btn {
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.category-actions .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Subcategorías */
+.category-children {
+  margin-top: 5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .categories-header {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .category-row {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .category-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .category-node.level-1 {
+    margin-left: 15px;
+  }
+
+  .category-node.level-2 {
+    margin-left: 30px;
+  }
+
+  .category-node.level-3 {
+    margin-left: 45px;
+  }
+}
